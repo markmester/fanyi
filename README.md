@@ -49,7 +49,7 @@ After setting up the [App Configuration](#configuration), run:
 
 ```sh
     ENV=.env make build
-   ENV=.env make up
+    ENV=.env make up
 ```
 
 > By default, this will start a bot in 'ephemeral' mode. This means any user configurations (e.g. channel auto-translation preferences) will not be saved when the bot restarts. The configuration can be persisted by following the instructions in the [.env.example](.env.example)
