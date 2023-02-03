@@ -1,0 +1,30 @@
+---
+version: "3.7"
+services:
+
+  fanyi-slackbot:
+    build:
+      context: .
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/fanyi-slackbot:${VERSION}
+    container_name: fanyi-slackbot
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 30Gb
+    environment:
+      VERSION: ${VERSION}
+      AWS_REGION: ${AWS_REGION}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    networks:
+      - fanyi
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_REGION}
+        awslogs-group: fanyi
+        awslogs-stream-prefix: fanyi.slackbot
+networks:
+  fanyi:
+
