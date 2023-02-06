@@ -52,14 +52,14 @@ push: ## Push services to ECR
 
 
 .PHONY: ecs-generate
-ecs-generate: config ## Generate ECS service spec (remote)	
+ecs-generate: ## Generate ECS service spec (remote)	
 	@printf "\033[36m==> %s\033[0m\n" "Generating service spec (ECS)..."
 	@aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ECR)
 	@docker context create ecs fanyi-ecs-context --from-env 2>/dev/null; true
 	@docker --context fanyi-ecs-context compose --project-name fanyi-slackbot convert > /tmp/fanyi_cf.yml
 	
 .PHONY: ecs-deploy
-ecs-deploy: check ## Deploy ECS service specification (Cloudformation Stack) (remote)
+ecs-deploy: ## Deploy ECS service specification (Cloudformation Stack) (remote)
 	@printf "\033[36m==> %s\033[0m\n" "Deploying service spec (ECS)..."
 	@aws cloudformation create-stack --template-body file:///tmp/fanyi_cf.yml --stack-name fanyi-slackbot --capabilities CAPABILITY_IAM
 	@aws cloudformation wait stack-create-complete --stack-name fanyi-slackbot

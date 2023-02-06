@@ -10,21 +10,23 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4'
-          memory: 30Gb
+          cpus: '1'
+          memory: 2048mb
     environment:
       VERSION: ${VERSION}
       AWS_REGION: ${AWS_REGION}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-    networks:
-      - fanyi
     logging:
       driver: awslogs
       options:
         awslogs-region: ${AWS_REGION}
+        #! Ensure this log group exists prior to deploying to ECS!
         awslogs-group: fanyi
         awslogs-stream-prefix: fanyi.slackbot
-networks:
-  fanyi:
+    volumes:
+      - config_store:/store
 
+volumes:
+  config_store:
+    name: config_store
