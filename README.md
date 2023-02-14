@@ -57,5 +57,3 @@ After setting up the [App Configuration](#configuration), run:
 ### ECS
 
 The app can be deployed to ECS using the docker-compose ECS context. To deploy, configure a `.env` file according to the `.env.example` file and run: `ENV=.env make deploy".
-
-> Note: ECS deployment not yet fully tested/documented
